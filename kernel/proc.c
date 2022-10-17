@@ -6,6 +6,8 @@
 #include "proc.h"
 #include "defs.h"
 
+#define NPRIO 3
+
 struct cpu cpus[NCPU];
 
 struct proc proc[NPROC];
@@ -460,6 +462,9 @@ scheduler(void)
         // before jumping back to us.
         p->state = RUNNING;
         c->proc = p;
+
+        p->popularity++;    //cada vez que se elige se corre y sube la popu
+
         swtch(&c->context, &p->context);
 
         // Process is done running for now.
@@ -504,6 +509,7 @@ yield(void)
 {
   struct proc *p = myproc();
   acquire(&p->lock);
+  myproc()->priority += (myproc()->priority == NPRIO-1) ? 0 : 1; //cambios para MLFQ
   p->state = RUNNABLE;
   sched();
   release(&p->lock);
@@ -550,6 +556,9 @@ sleep(void *chan, struct spinlock *lk)
   // Go to sleep.
   p->chan = chan;
   p->state = SLEEPING;
+
+  // 
+  p->priority -= (p->priority == 0) ? 0 : 1;
 
   sched();
 
@@ -677,7 +686,7 @@ procdump(void)
       state = states[p->state];
     else
       state = "???";
-    printf("%d %s %s", p->pid, state, p->name);
+    printf("%d %s %s %d %d", p->pid, state, p->name, p->priority, p->popularity);
     printf("\n");
   }
 }

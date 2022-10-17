@@ -8,9 +8,15 @@
 #define TIMES 32
 #define MINTICKS 100
 
-static float a[N][N];
+static float a[N][N]; 
 static float b[N][N];
 static float c[N][N];
+
+/*
+static int a[N][N];
+static int b[N][N];
+static int c[N][N];
+*/
 
 static void init(void) {
   int x, y;
@@ -18,12 +24,13 @@ static void init(void) {
     for (x = 0; x < N; ++x) {
       a[y][x] = y - x;
       b[y][x] = x - y;
-      c[y][x] = 0.0f;
+      c[y][x] = 0.0f; //cambiar a 0.0
     }
   }
 }
 
-static void matmul(float beta) {
+static void matmul(float beta) { //cambiar tipo
+//static void matmul(int beta) {
   int x, y, k;
   for (y = 0; y < N; ++y) {
     for (x = 0; x < N; ++x) {
@@ -38,7 +45,8 @@ int
 main(int argc, char *argv[])
 {
   int pid = getpid();
-  float beta = 1.0f;
+  float beta = 1.0f; 
+  //int beta = 1; 
 
   init();
   int start = uptime();

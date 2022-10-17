@@ -104,4 +104,9 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
+
+  // CAMBIOS DE LOS PIBES PARA EL MLFQ
+  uint priority;               //prioridad actual  
+  uint popularity;             //cuenta la cant. veces que fue elegido
+
 };
