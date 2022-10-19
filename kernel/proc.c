@@ -148,6 +148,9 @@ found:
   p->context.ra = (uint64)forkret;
   p->context.sp = p->kstack + PGSIZE;
 
+  p->priority = 0;    //inicialización de la prioridad del prcoeso
+  p->popularity = 0;  //idem pero con popularidad
+
   return p;
 }
 
