@@ -512,7 +512,11 @@ yield(void)
 {
   struct proc *p = myproc();
   acquire(&p->lock);
-  myproc()->priority += (myproc()->priority == NPRIO-1) ? 0 : 1; //cambios para MLFQ
+
+  myproc()->priority += (myproc()->priority == NPRIO+5) ? 0 : 1; //cambios para MLFQ
+  //que un proceso haga yield significa que ya laburo mucho, el hecho que pase a RUNNABLE significa que no tiene ningun I/O 
+  //sino mas bien que ya termino su quamtum (ver yield en trap.c para mas info)
+
   p->state = RUNNABLE;
   sched();
   release(&p->lock);
@@ -560,8 +564,9 @@ sleep(void *chan, struct spinlock *lk)
   p->chan = chan;
   p->state = SLEEPING;
 
-  // 
-  p->priority -= (p->priority == 0) ? 0 : 1;
+  p->priority -= (p->priority == 0) ? 0 : 1; //cambios para el MLFQ
+  //el hecho que se mande a dormir significa que NO puede seguir ejecutando, pista a que esta haciendo un I/O
+  //ademas se llama a sched para que tome un nuevo proceso, todo cierra
 
   sched();
 
