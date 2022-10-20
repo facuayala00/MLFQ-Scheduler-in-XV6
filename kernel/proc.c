@@ -513,7 +513,7 @@ yield(void)
   struct proc *p = myproc();
   acquire(&p->lock);
 
-  myproc()->priority += (myproc()->priority == NPRIO+5) ? 0 : 1; //cambios para MLFQ
+  myproc()->priority += (myproc()->priority == NPRIO-1) ? 0 : 1; //cambios para MLFQ
   //que un proceso haga yield significa que ya laburo mucho, el hecho que pase a RUNNABLE significa que no tiene ningun I/O 
   //sino mas bien que ya termino su quamtum (ver yield en trap.c para mas info)
 
