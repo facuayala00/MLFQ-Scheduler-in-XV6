@@ -1,0 +1,34 @@
+qemu-system-riscv64 -machine virt -bios none -kernel kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=fs.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0
+
+xv6 kernel is booting
+
+init: starting sh
+$ iobench
+					3, 5518 IOP1000T
+					3, 5529 IOP1000T
+					3, 5512 IOP1000T
+					3, 5487 IOP1000T
+					3, 5523 IOP1000T
+					3, 5507 IOP1000T
+					3, 5493 IOP1000T
+					3, 5493 IOP1000T
+					3, 5504 IOP1000T
+					3, 5493 IOP1000T
+					3, 5487 IOP1000T
+					3, 5487 IOP1000T
+					3, 5482 IOP1000T
+					3, 5438 IOP1000T
+					3, 5322 IOP1000T
+					3, 5259 IOP1000T
+					3, 5264 IOP1000T
+					3, 5227 IOP1000T
+					3, 5232 IOP1000T
+					3, 5168 IOP1000T
+					3, 5173 IOP1000T
+					3, 5158 IOP1000T
+					3, 5163 IOP1000T
+					3, 5137 IOP1000T
+					3, 5196 IOP1000T
+					3, 5190 IOP1000T
+					3, 5099 IOP1000T
+					3, 5190 IOP1000T
