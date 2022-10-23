@@ -108,5 +108,6 @@ struct proc {
   // CAMBIOS DE LOS PIBES PARA EL MLFQ
   uint priority;               //prioridad actual  
   uint popularity;             //cuenta la cant. veces que fue elegido
-
+  
+  struct proc *next_proc;
 };

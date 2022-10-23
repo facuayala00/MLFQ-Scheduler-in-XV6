@@ -28,6 +28,43 @@ extern char trampoline[]; // trampoline.S
 // must be acquired before any p->lock.
 struct spinlock wait_lock;
 
+struct proc *queue[NPRIO]; //cola de prioridades de procesos
+// la idea es tener un array de colas de prioridades para los procesos
+void
+enqueue(struct proc *p)
+{
+  if(queue[p->priority] == 0) { //no hay procesos en la cola
+    queue[p->priority] = p;
+  }
+  else { //ya hay procesos en la cola
+    struct proc *aux = queue[p->priority];
+    while(aux->next_proc != 0) {
+      aux = aux->next_proc;
+    }
+    aux->next_proc = p; 
+  }
+  p->next_proc = 0;
+  // p->state = RUNNABLE;
+}
+
+void
+dequeue(void)
+{ 
+  for(int i=0; 0 < NPRIO; i++) {
+    if(queue[i] == 0) { //vamos hasta la cola no vacia
+      continue;
+    }
+    else {
+      if(queue[i]->next_proc == 0) { //un solo elemento
+        queue[i] = 0;
+      }
+      else { //varios procesos
+        queue[i] = queue[i]->next_proc;
+      }
+      break; //se corta el bucle ya que se encoló
+    }
+  }
+}
 // Allocate a page for each process's kernel stack.
 // Map it high in memory, followed by an invalid
 // guard page.
