@@ -293,6 +293,8 @@ userinit(void)
 
   p->state = RUNNABLE;
 
+  enqueue(p); //se encola que esta RUNNABLE
+
   release(&p->lock);
 }
 
@@ -362,6 +364,7 @@ fork(void)
 
   acquire(&np->lock);
   np->state = RUNNABLE;
+  enqueue(np); //se encola que esta RUNNABLE
   release(&np->lock);
 
   return pid;
@@ -494,25 +497,29 @@ scheduler(void)
     // Avoid deadlock by ensuring that devices can interrupt.
     intr_on();
 
-    for(p = proc; p < &proc[NPROC]; p++) {
+    for(int i=0; i < NPRIO; i++) {
+      if(queue[i] == 0) {
+        continue;
+      }
+      p = queue[i];
       acquire(&p->lock);
-      if(p->state == RUNNABLE) {
         // Switch to chosen process.  It is the process's job
         // to release its lock and then reacquire it
         // before jumping back to us.
-        p->state = RUNNING;
-        c->proc = p;
+      dequeue();          //se deseconla pues ya laburó
+      p->state = RUNNING;
+      c->proc = p;
+    
+      p->popularity++;    //cada vez que se elige se corre y sube la popu
 
-        p->popularity++;    //cada vez que se elige se corre y sube la popu
-
-        swtch(&c->context, &p->context);
-
+      swtch(&c->context, &p->context);
         // Process is done running for now.
         // It should have changed its p->state before coming back.
-        c->proc = 0;
-      }
+      c->proc = 0;        
+
       release(&p->lock);
-    }
+      i=-1; //este -1 es la solución mas ad hoc de mi vida, en teoria debe funcionar como un break
+    }       //hace que el for de queue[] vuelva a 0 (-1 y luego i++)
   }
 }
 
@@ -555,6 +562,7 @@ yield(void)
   //sino mas bien que ya termino su quamtum (ver yield en trap.c para mas info)
 
   p->state = RUNNABLE;
+  enqueue(p); //se encola que esta RUNNABLE
   sched();
   release(&p->lock);
 }
@@ -627,6 +635,7 @@ wakeup(void *chan)
       acquire(&p->lock);
       if(p->state == SLEEPING && p->chan == chan) {
         p->state = RUNNABLE;
+        enqueue(p); //se encola que esta RUNNABLE
       }
       release(&p->lock);
     }
@@ -648,6 +657,7 @@ kill(int pid)
       if(p->state == SLEEPING){
         // Wake process from sleep().
         p->state = RUNNABLE;
+        enqueue(p); //se encola que esta RUNNABLE
       }
       release(&p->lock);
       return 0;
