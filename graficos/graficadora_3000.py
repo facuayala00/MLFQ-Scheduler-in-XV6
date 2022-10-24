@@ -7,18 +7,18 @@ scheds = ['RR', 'RR :10', 'RR :100', 'MLFQ', 'MLFQ :10', 'MLFQ :100']
 
 ##Los datos este los sacamos de los excels del fabri c:
 ## Son los promedios de KFLOPS/IOPS de cada caso en cada scheduler
-caso_0 = [7377.29, 7284.066, 633.13, 1323, 123, 111]
+caso_0 = [7377.29, 5347.53, 4434.78, 7291.73, 5718.8, 4889.19]
 
-caso_1 = [707377.29, 37284.066, 633.13, 133223, 123, 111]
+caso_1 = [74213.625, 7284.066, 633.13, 73597.5, 7141.93, 642]
 
-caso_2_io = [12321, 1243, 1233, 4345, 365, 5454]
-caso_2_cpu = [1213, 8243, 33, 445, 65, 545]
+caso_2_io = [32.82, 332.730, 2966.3125, 32.76, 332.73, 3088.33]
+caso_2_cpu = [73753, 6929.37, 169.6, 73332.8, 6929.76, 341.13]
 
-caso_3_io1 = [1, 10, 100, 1000, 10000, 100000]
-caso_3_io2 = [1, 10, 100, 1000, 10000, 100000]
+caso_3_io1 = [8047.70, 6939.16, 4761.37, 7490.65, 7329.23, 0]
+caso_3_io2 = [8043.55, 6931.53, 4766.59, 7112.5, 7304.23,  0]
 
-caso_4_cpu1 = [1, 10, 100, 1000, 10000, 100000]
-caso_4_cpu2 = [1, 10, 100, 1000, 10000, 100000]
+caso_4_cpu1 = [36652.35, 3643.31, 315.07, 36966.69, 3642.03, 320.94]
+caso_4_cpu2 = [36794.83, 3658.07, 327.48, 36941.79, 3638.45, 320.94]
 
 ## Caso 0
 fig0, ax1 = plt.subplots(figsize = (10,5))  #preparo el plot
@@ -41,7 +41,7 @@ plt.title('Caso 1 (un cpubench)')
 
 ax1.set_xlabel('Schedulers')         #label de la X
 ax1.set_ylabel('FLOPS', color='blue')  #label de la y
-ax1.bar(scheds, caso_1,color = 'blue', edgecolor ='grey', width=-0.4,align='edge', label='proceso cpu')  #grafico 
+ax1.bar(scheds, caso_1,color = 'blue', edgecolor ='grey', label='proceso cpu')  #grafico 
 ax1.tick_params(axis ='y', labelcolor = 'blue')              #colorcitos al eje
 
 plt.title('Caso 1 (un cpubench)')
