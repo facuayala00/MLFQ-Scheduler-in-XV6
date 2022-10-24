@@ -1,0 +1,44 @@
+qemu-system-riscv64 -machine virt -bios none -kernel kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=fs.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0
+
+xv6 kernel is booting
+
+init: starting sh
+$ iobench &; cpubench
+3, 72477 KFLOP100T
+3, 73753 KFLOP100T
+					5, 30 IOP100T
+3, 73030 KFLOP100T
+					5, 33 IOP100T
+3, 72477 KFLOP100T
+3, 73753 KFLOP100T
+					5, 33 IOP100T
+3, 73030 KFLOP100T
+3, 73753 KFLOP100T
+					5, 33 IOP100T
+3, 73753 KFLOP100T
+3, 73030 KFLOP100T
+					5, 33 IOP100T
+3, 73753 KFLOP100T
+3, 73030 KFLOP100T
+					5, 33 IOP100T
+3, 73030 KFLOP100T
+3, 73753 KFLOP100T
+					5, 33 IOP100T
+3, 73030 KFLOP100T
+3, 73753 KFLOP100T
+					5, 33 IOP100T
+3, 73030 KFLOP100T
+3, 73753 KFLOP100T
+					5, 33 IOP100T
+3, 73030 KFLOP100T
+3, 73753 KFLOP100T
+					5, 33 IOP100T
+3, 73030 KFLOP100T
+3, 73753 KFLOP100T
+					5, 33 IOP100T
+3, 73030 KFLOP100T
+					5, 33 IOP100T
+3, 73753 KFLOP100T
+3, 73030 KFLOP100T
+					5, 33 IOP100T
+3, 73753 KFLOP100T
